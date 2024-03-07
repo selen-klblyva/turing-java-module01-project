@@ -1,7 +1,9 @@
 package Project1;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
-public class Human {
+public abstract class Human {
     private String name;
     private String surname;
     private int yearofBirth;
@@ -10,6 +12,15 @@ public class Human {
     private Human mother;
     private Human father;
     private String[][] schedule;
+    private Family family;
+
+    public Human(String name,String surname,int yearofBirth,int iq,String[][] schedule){
+        this.name=name;
+        this.surname=surname;
+        this.yearofBirth=yearofBirth;
+        this.iq=iq;
+        this.schedule=schedule;
+    }
 
     public Human(String name,String surname,int yearofBirth){
         this.name=name;
@@ -78,12 +89,16 @@ public class Human {
     public Human getFather(){
         return this.father;
     }
+    public void setFamily(Family family){
+        this.family=family;
+    }
+    public Family getFamily(){
+        return this.family;
+    }
     public Human(){
 
     }
-    public void greetPet(){
-        System.out.println("Hello "+pet.getNickname());
-    }
+    public abstract void greetPet(Pet pet);
     public void describePet(){
         String slyLevel=(pet.getTrickLevel()>50 ? "very sly":"almost not sly");
         System.out.println("I have a "+pet.getSpecies()+"is "+pet.getAge()+"years old, he is "+slyLevel);
@@ -116,6 +131,35 @@ public class Human {
         }
 
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Human human = (Human) o;
+        return yearofBirth == human.yearofBirth && iq == human.iq && Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(pet, human.pet) && Objects.equals(mother, human.mother) && Objects.equals(father, human.father) && Arrays.equals(schedule, human.schedule);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(name, surname, yearofBirth, iq, pet, mother, father);
+        result = 31 * result + Arrays.hashCode(schedule);
+        return result;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
